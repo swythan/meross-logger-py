@@ -13,6 +13,11 @@
 		"python.linting.pylintPath": "/usr/local/share/pip-global/bin/pylint"
 	},
 
+	"remoteEnv": {
+		"MEROSS_EMAIL" : "${localEnv:MEROSS_EMAIL}",
+		"MEROSS_PASSWORD": "${localEnv:MEROSS_PASSWORD}"
+	},
+
 	// Use 'appPort' to create a container with published ports. If the port isn't working, be sure
 	// your server accepts connections from all interfaces (0.0.0.0 or '*'), not just localhost.
 	// "appPort": [ 9000 ],
