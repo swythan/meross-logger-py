@@ -3,7 +3,7 @@
 # Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
 #-------------------------------------------------------------------------------------------------------------
 
-FROM python:3.7
+FROM python:3.7-stretch
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
@@ -31,6 +31,17 @@ RUN apt-get update \
     #
     # Verify git, process tools, lsb-release (common in install instructions for CLIs) installed
     && apt-get -y install git iproute2 procps lsb-release \
+    #
+    # Setup Microsoft APT repos
+    && apt-get install -y wget \
+    && apt-get update \
+    && apt-get install -y apt-transport-https curl gnupg \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    #
+    # Install Azure Function Core Tools
+    && apt-get update \
+    && apt-get install -y azure-functions-core-tools \
     #
     # Install pylint
     && pip --disable-pip-version-check --no-cache-dir install pylint \
